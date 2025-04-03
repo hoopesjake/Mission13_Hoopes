@@ -79,10 +79,16 @@ const Cart: React.FC = () => {
                                 <strong>Total:</strong> ${total.toFixed(2)}
                             </p>
                             <div className="d-grid gap-2">
-                                <button className="btn btn-outline-secondary" onClick={handleContinue}>
+                                <button
+                                    className="btn btn-outline-secondary"
+                                    onClick={handleContinue}
+                                >
                                     Continue Shopping
                                 </button>
-                                <button className="btn btn-outline-danger" onClick={clearCart}>
+                                <button
+                                    className="btn btn-outline-danger"
+                                    onClick={clearCart}
+                                >
                                     Clear Cart
                                 </button>
                             </div>

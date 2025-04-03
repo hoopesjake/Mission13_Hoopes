@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 interface CartItem {
-    bookId: number;
+    bookId: number; // ✅ consistent with BookList and API response
     title: string;
     price: number;
     quantity: number;
@@ -68,10 +68,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const getSubtotal = () => {
-        return cart.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0
-        );
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
     return (

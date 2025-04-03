@@ -6,11 +6,11 @@ import CartSummary from "./CartSummary";
 import { useCart } from "./CartContext";
 import { useSearchParams } from "react-router-dom";
 
-// ✅ Set backend base URL
+// ✅ Set correct backend URL
 axios.defaults.baseURL = "https://mission13backend-hoopes-ate7fmb3axfxeffw.eastus-01.azurewebsites.net";
 
 interface Book {
-    bookID: number;
+    bookId: number; // ✅ match backend response casing
     title: string;
     author: string;
     publisher: string;
@@ -64,6 +64,7 @@ const BookList = () => {
     return (
         <div className="container mt-4">
             <CartSummary />
+
             <h2 className="mb-3">📚 Book List</h2>
 
             <CategoryFilter
@@ -115,7 +116,7 @@ const BookList = () => {
                         </tr>
                     ) : (
                         books.map((book) => (
-                            <tr key={book.bookID}>
+                            <tr key={book.bookId}>
                                 <td>{book.title}</td>
                                 <td>{book.author}</td>
                                 <td>{book.publisher}</td>
@@ -134,7 +135,7 @@ const BookList = () => {
                                             );
 
                                             const selectedBook = {
-                                                bookId: book.bookID, // ✅ MATCHING API CASING
+                                                bookId: book.bookId, // ✅ this was the fix
                                                 title: book.title,
                                                 price: book.price,
                                                 quantity: 1,
