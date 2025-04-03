@@ -1,0 +1,68 @@
+# === GENERAL OS STUFF ===
+.DS_Store
+Thumbs.db
+
+# === IDE SETTINGS ===
+.vscode/
+.idea/
+*.code-workspace
+*.sln.docstates
+*.DotSettings.user
+
+# === LOGS ===
+*.log
+**/*.log
+
+# === USER-SPECIFIC FILES ===
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+
+# === BUILD OUTPUT ===
+bin/
+obj/
+dist/
+build/
+.vite/
+out/
+
+# === NODE ===
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+
+# === ASP.NET SENSITIVE FILES ===
+appsettings.json
+appsettings.Development.json
+
+# === DATABASES ===
+*.sqlite
+.*.sqlite
+*.db
+Bookstore.sqlite
+
+# === ENV FILES ===
+.env
+.env.*
+
+# === TEST FILES ===
+coverage/
+*.test.ts
+*.test.tsx
+
+# === TEMP FILES ===
+*.tmp
+*.temp
+*.bak
+
+# === VITE STATIC OUTPUT ===
+frontend/dist
+
+# === PUBLISH FOLDER ===
+backend/publish
+
+
+ 
