@@ -52,7 +52,9 @@ const Cart: React.FC = () => {
                                                 className="form-control"
                                                 min={1}
                                                 value={item.quantity}
-                                                onChange={(e) => updateQuantity(item.bookId, Number(e.target.value))}
+                                                onChange={(e) =>
+                                                    updateQuantity(item.bookId, Number(e.target.value))
+                                                }
                                             />
                                         </td>
                                         <td>${(item.quantity * item.price).toFixed(2)}</td>
@@ -60,7 +62,9 @@ const Cart: React.FC = () => {
                                             <button
                                                 className="btn btn-sm btn-danger"
                                                 onClick={() => removeFromCart(item.bookId)}
-                                            >Remove</button>
+                                            >
+                                                Remove
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -75,8 +79,12 @@ const Cart: React.FC = () => {
                                 <strong>Total:</strong> ${total.toFixed(2)}
                             </p>
                             <div className="d-grid gap-2">
-                                <button className="btn btn-outline-secondary" onClick={handleContinue}>Continue Shopping</button>
-                                <button className="btn btn-outline-danger" onClick={clearCart}>Clear Cart</button>
+                                <button className="btn btn-outline-secondary" onClick={handleContinue}>
+                                    Continue Shopping
+                                </button>
+                                <button className="btn btn-outline-danger" onClick={clearCart}>
+                                    Clear Cart
+                                </button>
                             </div>
                         </div>
                     </div>

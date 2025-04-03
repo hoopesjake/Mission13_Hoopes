@@ -40,7 +40,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
             const existing = prevCart.find((i) => i.bookId === item.bookId);
             if (existing) {
                 return prevCart.map((i) =>
-                    i.bookId === item.bookId ? { ...i, quantity: i.quantity + item.quantity } : i
+                    i.bookId === item.bookId
+                        ? { ...i, quantity: i.quantity + item.quantity }
+                        : i
                 );
             }
             return [...prevCart, item];
@@ -58,13 +60,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const updateQuantity = (bookId: number, quantity: number) => {
         setCart((prevCart) =>
             prevCart.map((item) =>
-                item.bookId === bookId ? { ...item, quantity: Math.max(quantity, 1) } : item
+                item.bookId === bookId
+                    ? { ...item, quantity: Math.max(quantity, 1) }
+                    : item
             )
         );
     };
 
     const getSubtotal = () => {
-        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        return cart.reduce(
+            (total, item) => total + item.price * item.quantity,
+            0
+        );
     };
 
     return (
@@ -86,6 +93,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useCart = () => {
     const context = useContext(CartContext);
-    if (!context) throw new Error("useCart must be used within a CartProvider");
+    if (!context) {
+        throw new Error("useCart must be used within a CartProvider");
+    }
     return context;
 };

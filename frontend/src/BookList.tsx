@@ -1,4 +1,3 @@
-// ✅ BookList.tsx – Fully fixed to use correct book ID and add distinct items
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,9 +6,8 @@ import CartSummary from "./CartSummary";
 import { useCart } from "./CartContext";
 import { useSearchParams } from "react-router-dom";
 
-
+// ✅ Set backend base URL
 axios.defaults.baseURL = "https://mission13backend-hoopes-ate7fmb3axfxeffw.eastus-01.azurewebsites.net";
-
 
 interface Book {
     bookID: number;
@@ -66,7 +64,6 @@ const BookList = () => {
     return (
         <div className="container mt-4">
             <CartSummary />
-
             <h2 className="mb-3">📚 Book List</h2>
 
             <CategoryFilter
@@ -137,7 +134,7 @@ const BookList = () => {
                                             );
 
                                             const selectedBook = {
-                                                bookId: book.bookID, // ✅ corrected to match CartItem interface
+                                                bookId: book.bookID, // ✅ MATCHING API CASING
                                                 title: book.title,
                                                 price: book.price,
                                                 quantity: 1,
