@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
-export interface CartItem {
+interface CartItem {
     bookId: number;
     title: string;
     price: number;
@@ -11,65 +11,74 @@ interface CartContextType {
     cart: CartItem[];
     addToCart: (item: CartItem) => void;
     removeFromCart: (bookId: number) => void;
-    updateQuantity: (bookId: number, quantity: number) => void;
     clearCart: () => void;
+    updateQuantity: (bookId: number, quantity: number) => void;
+    getSubtotal: () => number;
     isLoaded: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        const storedCart = sessionStorage.getItem('cart');
-        if (storedCart) {
-            setCart(JSON.parse(storedCart));
+        const stored = sessionStorage.getItem("cart");
+        if (stored) {
+            setCart(JSON.parse(stored));
         }
         setIsLoaded(true);
     }, []);
 
     useEffect(() => {
-        if (isLoaded) {
-            sessionStorage.setItem('cart', JSON.stringify(cart));
-        }
-    }, [cart, isLoaded]);
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
 
     const addToCart = (item: CartItem) => {
-        console.log("[addToCart] Adding:", item);
-        setCart((prev) => {
-            console.log("[addToCart] Current cart:", prev);
-            const existing = prev.find((i) => i.bookId === item.bookId);
+        setCart((prevCart) => {
+            const existing = prevCart.find((i) => i.bookId === item.bookId);
             if (existing) {
-                console.log("[addToCart] Found match. Updating quantity.");
-                return prev.map((i) =>
-                    i.bookId === item.bookId
-                        ? { ...i, quantity: i.quantity + item.quantity }
-                        : i
+                return prevCart.map((i) =>
+                    i.bookId === item.bookId ? { ...i, quantity: i.quantity + item.quantity } : i
                 );
             }
-            console.log("[addToCart] New item. Adding to cart.");
-            return [...prev, item];
+            return [...prevCart, item];
         });
     };
 
     const removeFromCart = (bookId: number) => {
-        setCart((prev) => prev.filter((item) => item.bookId !== bookId));
+        setCart((prevCart) => prevCart.filter((item) => item.bookId !== bookId));
+    };
+
+    const clearCart = () => {
+        setCart([]);
     };
 
     const updateQuantity = (bookId: number, quantity: number) => {
-        setCart((prev) =>
-            prev.map((item) =>
-                item.bookId === bookId ? { ...item, quantity: Math.max(1, quantity) } : item
+        setCart((prevCart) =>
+            prevCart.map((item) =>
+                item.bookId === bookId ? { ...item, quantity: Math.max(quantity, 1) } : item
             )
         );
     };
 
-    const clearCart = () => setCart([]);
+    const getSubtotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, isLoaded }}>
+        <CartContext.Provider
+            value={{
+                cart,
+                addToCart,
+                removeFromCart,
+                clearCart,
+                updateQuantity,
+                getSubtotal,
+                isLoaded,
+            }}
+        >
             {children}
         </CartContext.Provider>
     );
