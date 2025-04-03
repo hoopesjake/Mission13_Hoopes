@@ -8,7 +8,8 @@ import { useCart } from "./CartContext";
 import { useSearchParams } from "react-router-dom";
 
 
-axios.defaults.baseURL = "https://mission13backend-hoopes.azurewebsites.net";
+axios.defaults.baseURL = "https://mission13backend-hoopes-ate7fmb3axfxeffw.eastus-01.azurewebsites.net";
+
 
 interface Book {
     bookID: number;
