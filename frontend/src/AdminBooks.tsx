@@ -1,9 +1,8 @@
-// ✅ AdminBooks.tsx — Full add/edit/delete functionality for Mission 13
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface Book {
-    bookID: number;
+    bookId: number; // ✅ match backend casing
     title: string;
     author: string;
     publisher: string;
@@ -15,7 +14,7 @@ interface Book {
 }
 
 const emptyBook: Book = {
-    bookID: 0,
+    bookId: 0,
     title: '',
     author: '',
     publisher: '',
@@ -42,12 +41,15 @@ const AdminBooks = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormBook({ ...formBook, [name]: name === 'pageCount' || name === 'price' ? +value : value });
+        setFormBook({
+            ...formBook,
+            [name]: name === 'pageCount' || name === 'price' ? +value : value,
+        });
     };
 
     const handleSubmit = async () => {
         if (isEditing) {
-            await axios.put(`/api/books/${formBook.bookID}`, formBook);
+            await axios.put(`/api/books/${formBook.bookId}`, formBook);
         } else {
             await axios.post('/api/books', formBook);
         }
@@ -75,8 +77,8 @@ const AdminBooks = () => {
                 <h5>{isEditing ? '✏️ Edit Book' : '➕ Add New Book'}</h5>
 
                 <div className="row g-3">
-                    {Object.entries(emptyBook).map(([key]) => (
-                        key !== 'bookID' && (
+                    {Object.entries(emptyBook).map(([key]) =>
+                        key !== 'bookId' ? (
                             <div className="col-md-4" key={key}>
                                 <input
                                     name={key}
@@ -86,8 +88,8 @@ const AdminBooks = () => {
                                     className="form-control"
                                 />
                             </div>
-                        )
-                    ))}
+                        ) : null
+                    )}
                 </div>
 
                 <div className="mt-3">
@@ -121,7 +123,7 @@ const AdminBooks = () => {
                 </thead>
                 <tbody>
                     {books.map((book) => (
-                        <tr key={book.bookID}>
+                        <tr key={book.bookId}>
                             <td>{book.title}</td>
                             <td>{book.author}</td>
                             <td>{book.category}</td>
@@ -135,7 +137,7 @@ const AdminBooks = () => {
                                 </button>
                                 <button
                                     className="btn btn-sm btn-outline-danger"
-                                    onClick={() => handleDelete(book.bookID)}
+                                    onClick={() => handleDelete(book.bookId)}
                                 >
                                     Delete
                                 </button>
